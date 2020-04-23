@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import * as userRepository from '../repositories/user.repository'
+import * as userRepository from '../repositories/user.repository';
 import User from '../entities/user';
 
 export const getUser = async (req: Request, res: Response): Promise<Response> => {

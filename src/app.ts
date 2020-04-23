@@ -7,6 +7,7 @@ import 'reflect-metadata';
 
 // Routes
 import authRoutes from './routes/auth.routes';
+import scoreRoutes from './routes/score.routes';
 
 class Application {
 
@@ -37,6 +38,21 @@ class Application {
 
     routes() {
         this.app.use('/api', authRoutes);
+        this.app.use('/api', scoreRoutes);
+        this.routesCatches();
+    }
+
+    routesCatches(){
+        // catch all other routes
+        this.app.use((req, res, next) => {
+            res.status(404).json({ message: '404 - Not Found' });
+        });
+        
+        // handle errors
+        this.app.use((err: any, req: any, res: any, next: Function) => {
+            console.log(err.message);
+            res.status(err.status || 500).json({ error: err.message });
+        });
     }
 
     start() {

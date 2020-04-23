@@ -24,7 +24,7 @@ export const createUser = async (user: User): Promise<User | null> => {
 }
 
 export const updateUser = async (user: User): Promise<User | null> => {
-    const userToUpdate: User | undefined = await getRepository(User).findOne({id: user.id});
+    const userToUpdate: User | undefined = await getRepository(User).findOne({iduser: user.iduser});
     if(!userToUpdate)
         return null;
 

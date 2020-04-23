@@ -1,8 +1,9 @@
-import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert, OneToMany } from 'typeorm';
 import bcrypt from 'bcrypt';
+import Score from './score';
 
 export interface IUSer {
-    id: Number;
+    iduser: Number;
     email: String;
     password: String;
     comparePassword: (password: string) => Promise<Boolean>;
@@ -12,7 +13,7 @@ export interface IUSer {
 export default class User implements IUSer {
 
     @PrimaryGeneratedColumn()
-    id: Number;
+    iduser: Number;
 
     @Column()
     firstname: string;
@@ -25,6 +26,9 @@ export default class User implements IUSer {
 
     @Column()
     password: string;
+
+    @OneToMany(type => Score, score => score.user)
+    scores: Score[];
 
     @BeforeInsert()
     async hashPassword() {

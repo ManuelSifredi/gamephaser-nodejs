@@ -8,7 +8,7 @@ const opts: StrategyOptions = {
 };
 
 export default new Strategy(opts, async (payload, done) => {
-    const user = await getUser(payload.id);
+    const user = await getUser(payload.iduser);
     if(!user)
         return done(null, false);
     return done(null, user);
