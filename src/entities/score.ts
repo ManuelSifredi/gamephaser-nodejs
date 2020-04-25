@@ -13,9 +13,6 @@ export default class Score {
     @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
     date: Timestamp;
 
-    @Column()
-    iduser: number;
-
     @ManyToOne(type => User, user => user.scores)
     user: User;
     

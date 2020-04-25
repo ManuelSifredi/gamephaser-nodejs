@@ -2,13 +2,23 @@ import { Request, Response } from 'express';
 import * as userRepository from '../repositories/user.repository';
 import User from '../entities/user';
 
-export const getUser = async (req: Request, res: Response): Promise<Response> => {
+export const getUserByID = async (req: Request, res: Response): Promise<Response> => {
     const user = await userRepository.getUser(<number><unknown>req.params.id);
     return res.json(user);
 }
 
+export const getLoggedUser = async (req: Request, res: Response): Promise<Response> => {
+    const user = await userRepository.getUser((<any>req.user).iduser);
+    return res.json(user);
+}
+
 export const getUserByEmail = async (req: Request, res: Response): Promise<Response> => {
-    const user = await userRepository.getUser(req.body.email);
+    const user = await userRepository.getUserByEmail(req.body.email);
+    return res.json(user);
+}
+
+export const getUserByUsername = async (req: Request, res: Response): Promise<Response> => {
+    const user = await userRepository.getUserByUsername(req.body.username);
     return res.json(user);
 }
 

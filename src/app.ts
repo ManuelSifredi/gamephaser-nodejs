@@ -8,6 +8,7 @@ import 'reflect-metadata';
 // Routes
 import authRoutes from './routes/auth.routes';
 import scoreRoutes from './routes/score.routes';
+import profileRoutes from './routes/profile.routes';
 
 class Application {
 
@@ -39,6 +40,7 @@ class Application {
     routes() {
         this.app.use('/api', authRoutes);
         this.app.use('/api', scoreRoutes);
+        this.app.use('/api', profileRoutes);
         this.routesCatches();
     }
 

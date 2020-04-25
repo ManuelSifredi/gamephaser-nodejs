@@ -9,7 +9,12 @@ export const getScore = async (id: number): Promise<Score | undefined> => {
 }
 
 export const getScoresByUser = async (iduser: number): Promise<Score[] | undefined> => {
-    const score: Score[] | undefined = await getRepository(Score).find({ iduser: iduser });
+    const data = getRepository(Score)
+    .createQueryBuilder('score')
+    .innerJoin('user.scores', 'score')
+    .where('user.iduser = :iduser', { iduser })
+    .orderBy('scores.date', 'DESC');
+    const score: Score[] | undefined = await data.getMany();
     if (!score)
         return undefined;
     return score;

@@ -11,8 +11,8 @@ function createToken(user: IUSer) {
 }
 
 export const singUp = async (req: Request, res: Response): Promise<Response> => {
-    const { email, password, firstname, lastname } = req.body;
-    if (!email || !password || !firstname || !lastname)
+    const { email, password, username } = req.body;
+    if (!email || !password || !username)
         return res.status(400).json({ msg: "Datos incompletos" });
 
     const user = await userRepository.getUserByEmail(email);
@@ -27,11 +27,11 @@ export const singUp = async (req: Request, res: Response): Promise<Response> => 
 }
 
 export const singIn = async (req: Request, res: Response) => {
-    const { email, password } = req.body;
-    if (!email || !password)
+    const { username, password } = req.body;
+    if (!username || !password)
         return res.status(401).json({ msg: "Datos incompletos" });
 
-    const user: User | undefined = await userRepository.getUserByEmail(email);
+    const user: User | undefined = await userRepository.getUserByUsername(username);
     if (!user)
         return res.status(400).json({ msg: "El usuario no existe" });
 

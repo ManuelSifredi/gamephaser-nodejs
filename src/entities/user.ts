@@ -4,6 +4,7 @@ import Score from './score';
 
 export interface IUSer {
     iduser: Number;
+    username: String;
     email: String;
     password: String;
     comparePassword: (password: string) => Promise<Boolean>;
@@ -16,10 +17,7 @@ export default class User implements IUSer {
     iduser: Number;
 
     @Column()
-    firstname: string;
-
-    @Column()
-    lastname: string;
+    username: string;
 
     @Column()
     email: string;

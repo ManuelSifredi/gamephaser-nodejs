@@ -15,6 +15,25 @@ export const getUserByEmail = async (email: string): Promise<User | undefined> =
     return user;
 }
 
+export const getUserByUsername = async (username: string): Promise<User | undefined> => {
+    const user: User | undefined = await getRepository(User).findOne({username});
+    if(!user)
+        return undefined;
+    return user;
+}
+
+export const getUserByIDWithscores = async (iduser: number): Promise<User | undefined> => {
+    const data = getRepository(User)
+    .createQueryBuilder('user')
+    .innerJoinAndSelect('user.scores', 'score')
+    .where('user.iduser = :iduser', { iduser })
+    .orderBy('score.date', 'DESC');
+    const user: User | undefined = await data.getOne();
+    if(!user)
+        return undefined;
+    return user;
+}
+
 export const createUser = async (user: User): Promise<User | null> => {
     const newUSer = getRepository(User).create(user);
     const savedUser: User | null = await getRepository(User).save(newUSer)
