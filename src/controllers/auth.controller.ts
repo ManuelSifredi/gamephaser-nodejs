@@ -15,7 +15,7 @@ export const singUp = async (req: Request, res: Response): Promise<Response> => 
     if (!email || !password || !username)
         return res.status(400).json({ msg: "Datos incompletos" });
 
-    const user = await userRepository.getUserByEmail(email);
+    const user: User | undefined = await userRepository.getUserByEmail(email);
     if (user)
         return res.status(400).json({ msg: "El usuario ya existe" });
 
@@ -23,7 +23,7 @@ export const singUp = async (req: Request, res: Response): Promise<Response> => 
     if(!results)
         return res.status(400).json({ msg: "El usuario no se creó" });
 
-    return res.status(201).json();
+    return res.status(201).json({ token: createToken(results) });
 }
 
 export const singIn = async (req: Request, res: Response) => {
