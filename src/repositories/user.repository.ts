@@ -25,7 +25,7 @@ export const getUserByUsername = async (username: string): Promise<User | undefi
 export const getUserByIDWithscores = async (iduser: number): Promise<User | undefined> => {
     const data = getRepository(User)
     .createQueryBuilder('user')
-    .innerJoinAndSelect('user.scores', 'score')
+    .leftJoinAndSelect('user.scores', 'score')
     .where('user.iduser = :iduser', { iduser })
     .orderBy('score.date', 'DESC');
     const user: User | undefined = await data.getOne();
